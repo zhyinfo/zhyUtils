@@ -1,0 +1,23 @@
+package com.zhy.utils.consistentHash;
+/**
+	1.普通 hash,增减node获取不到数据
+ */
+public class NodeArray {
+
+	Node[] nodes = new Node[1024];
+	int size = 0;
+
+	public void addNode(Node node) {
+		nodes[size++] = node;
+	}
+
+	Obj get(Obj obj) {
+		int index = obj.hashCode() % size;
+		return nodes[index].getObj(obj);
+	}
+
+	void put(Obj obj) {
+		int index = obj.hashCode() % size;
+		nodes[index].putObj(obj);
+	}
+}
