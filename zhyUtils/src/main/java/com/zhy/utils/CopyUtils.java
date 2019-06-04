@@ -28,10 +28,11 @@ public class CopyUtils {
 			threadPool.shutdown();  // 启动一次顺序关闭，执行以前提交的任务，但不接受新任务
 			
 			// 请求关闭、发生超时或者当前线程中断，无论哪一个首先发生之后，都将导致阻塞，直到所有任务完成执行
-		        // 设置最长等待60秒
-			threadPool.awaitTermination(60, TimeUnit.SECONDS);
-			
-			System.out.println("======== |<<<< 复制完成 >>>>| ==========");
+		    // 设置最长等待60秒
+			while (!threadPool.awaitTermination(1, TimeUnit.MINUTES)) {
+				System.out.println("==>> 拼命复制中 <<==");
+			}
+			System.out.println("============复制完成...==============");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
